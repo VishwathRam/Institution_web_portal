@@ -1,0 +1,173 @@
+<html>
+<title>Institution management system</title>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script src="https://kit.fontawesome.com/ec4472c738.js" crossorigin="anonymous"></script>
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+		<link rel="stylesheet" href="..\static\styles.css">
+		<title>Home</title>
+	</head>
+<body>
+<div style="height:13px; background:#3366ff;"></div>
+	<header class="bg-dark text-white py-3">
+	 <div class="container">
+	  <div class="row">
+	    <div class="col-md-12">
+	  	 <h1><i class="fas fa-university" style="color:#3366ff;"></i> Institution database management system</h1>
+		</div>
+	  </div>
+	 </div>
+	</header>
+	<div style="height:13px; background:#3366ff;"></div>
+	<section class="container py-2 mb-4">
+		<div class="row"> <!--style="min-height:50px; background:red;" -->
+		 <div class="offset-lg-1 col-lg-10 style="min-height: 400px;"> <!-- background:yellow;" -->
+		    <div class="card bg-secondary text-light mb-3">
+		    <div class="card-header">
+		     <h1>Your Details:</h1>
+            </div>
+			<div class="card-body bg-dark" >
+                {% block content %}
+					{% with messages = get_flashed_messages() %}
+					{% if messages %}
+					{% for msg in messages %}
+					<p style="color:red">{{msg}}</p>
+					{% endfor %}
+					{% endif %}
+					{% endwith %}
+					<p>Id: {{values[0]}}</p>
+					<p>Name: {{values[1]}}</p>
+					<p>Subject: {{values[2]}}</p>
+					<p>Date of Birth: {{values[3]}}</p>
+					<p>Address: {{values[4]}}</p>
+                    <br>
+					<div class="card-body bg-secondary text-light mb-3">
+                    <h1>Online/Offline Class:</h1>
+                    </div>
+					<p>Class 10-A is eligible to be held <b>{{x1}}</b></p>
+					<p>Class 10-B is eligible to be held <b>{{x2}}</b></p>
+					<p>Class 11-A is eligible to be held <b>{{x3}}</b></p>
+					<p>Class 11-B is eligible to be held <b>{{x4}}</b></p>
+					<p>Class 12-A is eligible to be held <b>{{x5}}</b></p><br>
+                    <div class="card-body bg-secondary text-light mb-3">
+                    <h1>Student details:</h1>
+                    </div>
+				<table class="table table-striped table-hover" width="1000" border="S" align="center">
+					<thead class="thead-dark">
+					<tr>
+					<th>Id</th>
+					<th>Name</th>
+					<th>Class</th>
+					<th>Date of birth</th>
+					<th>Address</th>
+					<th>Vaccinated</th>
+					<th>marks</th>
+					<th>edit</th>
+					</tr>
+					</thead>
+					<tbody style="background-color:#FFFFFF;">
+						{% for i in range(c) %}
+						<tr>
+							<td>{{results[i].id}}</td>
+							<td>{{results[i].name_}}</td>
+							<td>{{results[i].clas_}}</td>
+							<td>{{results[i].dob_}}</td>
+							<td>{{results[i].address_}}</td>
+							<td>{{results[i].vaccinated_}}</td>
+							<td>
+                        <form action="#" method="POST" >
+                        {% for j in range(c) %}
+                            {% if mks[j].mname_==results[i].name_ %}
+                                {% if values[2]=="Math" %}
+                                    {% if mks[j].math==-1 %}
+                                    <input class="input" type="number" min="0" max="100" name="dob" placeholder="N/A" required>
+                                    {% else %}
+                                    <input class="input" type="number" min="0" max="100" name="dob" value="{{mks[j].math}}" required>
+                                    {% endif %}
+                                {% elif values[2]=="Physics" %}
+                                    {% if mks[j].physics==-1 %}
+                                    <input class="input" type="number" min="0" max="100" name="dob" placeholder="N/A" required>
+                                    {% else %}
+                                    <input class="input" type="number" min="0" max="100" name="dob" value="{{mks[j].physics}}" required>
+                                    {% endif %}
+                                {% elif values[2]=="Chemistry" %}
+                                    {% if mks[j].chemistry==-1 %}
+                                    <input class="input" type="number" min="0" max="100" name="dob" placeholder="N/A" required>
+                                    {% else %}
+                                    <input class="input" type="number" min="0" max="100" name="dob" value="{{mks[j].chemistry}}" required>
+                                    {% endif %}
+                                {% elif values[2]=="Computer Science" %}
+                                    {% if mks[j].computer==-1 %}
+                                    <input class="input" type="number" min="0" max="100" name="dob" placeholder="N/A" required>
+                                    {% else %}
+                                    <input class="input" type="number" min="0" max="100" name="dob" value="{{mks[j].computer}}" required>
+                                    {% endif %}
+                                {% else %}
+                                    {% if mks[j].computer==-1 %}
+                                    <input class="input" type="number" min="0" max="100" name="dob" placeholder="N/A" required>
+                                    {% else %}
+                                    <input class="input" type="number" min="0" max="100" name="dob" value="{{mks[j].english}}" required>
+                                    {% endif %}
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+							</td>
+							<td>
+		                <button type="submit" name="submit" class="btn btn-warning btn-block" value="{{results[i].name_}}">
+		                <i class="fas fa-edit"> Edit mark</i>
+		                </button>
+							</td>
+                        </form>
+						</tr>
+                    {% endfor %}
+				{% endblock %}
+					</tbody>
+				</table>
+            <div class="container"><br>
+		<div class="row">
+		<div class="col-lg-4 mb-2">
+		 <a href="{{ url_for('login') }}" class="btn btn-success btn-block">
+		 <i class="fas fa-arrow-left"> Back </i>
+		 </a>
+		 </div>
+		<div class="col-lg-4 mb-2">
+		 <a href="{{ url_for('student_add') }}" class="btn btn-info btn-block">
+		    <i class="fas fa-user-plus"> Add Student</i>
+             </a>
+		</div>
+            <div class="col-lg-4 mb-2">
+		 <a href="{{ url_for('student_delete') }}" class="btn btn-danger btn-block">
+		 <i class="fas fa-trash"> delete student </i>
+		 </a>
+		 </div>
+			 </div>
+            </div>
+            </div>
+		   </div>
+		 </div>
+	</section>
+<!-- main area end-->
+	<!-- footer begin--><br><br>
+	<div style="height:13px; background:#3366ff;"></div>
+	<footer class="bg-dark text-white">
+<br><br><br><br><br>
+	</footer>
+	<div style="height:13px; background:#3366ff;"></div>
+	<!-- footer end-->
+	<!-- <input class="custom-file-input" type="file" name="csvfile" required="required" id="fileselect">
+				<label for="fileselect" class="custom-file-label">Select File:</label>
+				<div id="file-upload-filename"></div>
+				-->
+
+
+
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+	<script>
+		$('#year').text(new Date().getFullYear());
+	</script>
+</body>
+</html>
